@@ -1,0 +1,32 @@
+
+#!/bin/bash
+#
+# After the image has been written, we mount the second partition of the sd card, place this script in /etc/init.d/
+# and make it executable
+#sudo passwd root
+
+if ! [ -e /var/rpi_update ]; then
+
+    # https://github.com/RPi-Distro/raspberrypi-sys-mods/issues/6#issuecomment-254902333
+    sed -i 's/frontend=pager/frontend=text/' /etc/apt/listchanges.conf
+    apt-get update ; apt-get dist-upgrade -y ; apt-get install rpi-update ; rpi-update
+    sed -i 's/frontend=text/frontend=pager/' /etc/apt/listchanges.conf
+    touch /var/rpi_update
+    reboot
+fi
+
+apt-get install git -y
+git clone https://github.com/YunoHost/install_script /tmp/install_script
+cd /tmp/install_script && sudo ./install_yunohost -a
+
+sed -i '0,/without-password/s/without-password/yes/g' /etc/ssh/sshd_config
+deluser –-remove-all-files pi
+hostname -b YunoHost
+wget https://raw.githubusercontent.com/Sylvain303/install_script/master/build_arm_image/etc/init.d/yunohost-firstboot https://raw.githubusercontent.com/YunoHost/packages_old/0a4a0bb49d3754a14aff579d8f8ca8a21507b280/yunohost-config-others/config/others/boot_prompt.sh -P /etc/init.d/
+chmod a+x /etc/init.d/yunohost-firstboot /etc/init.d/boot_prompt.sh
+insserv /etc/init.d/yunohost-firstboot
+update-rc.d boot_prompt.sh defaults
+
+rm /var/rpi_update
+# Delete me
+rm $0
