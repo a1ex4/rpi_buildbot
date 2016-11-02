@@ -17,7 +17,7 @@ yes | ssh-keygen -f /etc/ssh/ssh_host_rsa_key -N '' -t rsa
 yes | ssh-keygen -f /etc/ssh/ssh_host_dsa_key -N '' -t dsa
 yes | ssh-keygen -f /etc/ssh/ssh_host_ecdsa_key -N '' -t ecdsa -b 521
 echo "Deleting logs ..."
-find /var/log -type f -exec echo > {} \;
+find /var/log -type f -exec rm {} \;
 echo "Purging apt ..."
 apt-get --purge clean
 echo "Removing myself ..."
