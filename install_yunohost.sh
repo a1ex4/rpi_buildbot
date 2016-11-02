@@ -17,6 +17,15 @@ fi
 
 apt-get install git -y
 git clone https://github.com/YunoHost/install_script /tmp/install_script
+
+# Extra steps for raspberry pi zero
+#
+# Needed for metronome installation
+# apt-get install -y ssl-cert lua-event lua-expat lua-socket lua-sec lua-filesystem
+# cd /tmp/install_script && wget https://github.com/likeitneverwentaway/rpi_buildbot/raw/master/metronome_3.7.9%2B33b7572-1_armhf.deb
+# dpkg -i metronome_3.7.9+33b7572-1_armhf.deb
+# apt-mark hold metronome
+
 cd /tmp/install_script && sudo ./install_yunohost -a
 
 sed -i '0,/without-password/s/without-password/yes/g' /etc/ssh/sshd_config
