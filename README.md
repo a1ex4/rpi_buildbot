@@ -1,5 +1,7 @@
 # rpi_buildbot
 
+Right now only the build_image.sh script is working. Usage : on a fresh install of Raspbian set the root password as yunohost, install git, then git clone https://github.com/YunoHost/install_script /tmp/install_script, chmod +x build_image.sh and execute the script.
+
 # Overview:
 
 -	When the farm is idle, the Raspberry is booted on a clean Raspbian image from usb
