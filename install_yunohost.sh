@@ -29,7 +29,7 @@ git clone https://github.com/YunoHost/install_script /tmp/install_script
 cd /tmp/install_script && sudo ./install_yunohost -a
 
 sed -i '0,/without-password/s/without-password/yes/g' /etc/ssh/sshd_config
-deluser –-remove-all-files pi
+deluser --remove-all-files pi
 hostname -b YunoHost
 wget https://raw.githubusercontent.com/likeitneverwentaway/rpi_buildbot/master/yunohost-firstboot https://raw.githubusercontent.com/YunoHost/packages_old/0a4a0bb49d3754a14aff579d8f8ca8a21507b280/yunohost-config-others/config/others/boot_prompt.sh -P /etc/init.d/
 chmod a+x /etc/init.d/yunohost-firstboot /etc/init.d/boot_prompt.sh
