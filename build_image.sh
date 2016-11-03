@@ -24,7 +24,9 @@ if [[ $( cat /proc/cpuinfo | grep 'Revision' | awk '{print $3}' | sed 's/^1000//
 fi
 
 # Yunohost install
-cd /tmp/install_script && sudo ./install_yunohost -a
+cd /tmp/install_script
+chmod +x install_script
+sudo ./install_yunohost -a
 
 # Allow ssh as root
 sed -i '0,/without-password/s/without-password/yes/g' /etc/ssh/sshd_config
