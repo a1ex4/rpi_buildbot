@@ -15,8 +15,10 @@ if ! [ -e /var/rpi_update ]; then
     reboot
 fi
 
-# If we are on the Raspberry Pi Zero http://elinux.org/RPi_HardwareHistory
+apt-get install git -y
+git clone https://github.com/YunoHost/install_script /tmp/install_script
 
+# If we are on the Raspberry Pi Zero http://elinux.org/RPi_HardwareHistory
 if [[ $( cat /proc/cpuinfo | grep 'Revision' | awk '{print $3}' | sed 's/^1000//') == *"9000"* ]]; then
     apt-get install -y ssl-cert lua-event lua-expat lua-socket lua-sec lua-filesystem
     cd /tmp/install_script && wget https://github.com/likeitneverwentaway/rpi_buildbot/raw/master/metronome_3.7.9%2B33b7572-1_armhf.deb
@@ -24,8 +26,7 @@ if [[ $( cat /proc/cpuinfo | grep 'Revision' | awk '{print $3}' | sed 's/^1000//
     apt-mark hold metronome
 fi
 
-apt-get install git -y
-git clone https://github.com/YunoHost/install_script /tmp/install_script
+
 cd /tmp/install_script && sudo ./install_yunohost -a
 
 sed -i '0,/without-password/s/without-password/yes/g' /etc/ssh/sshd_config
