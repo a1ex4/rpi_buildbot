@@ -6,7 +6,7 @@
 
 -	The build is called, we check if the latest raspbian lite downloaded is still the latest, we download the latest if needed
 -	The image is burned to the sd card
--	We grab and copy the installation script to the sd card. The script will:
+-	We grab and copy the installation script to the sd card. The script (build_image.sh) will:
 
   o	Set root password as “yunohost”
   
@@ -20,7 +20,7 @@
   
   o	Delete the pi user
   
-  o	Copy the first-boot script, make it executable and run at first boot. This script will, at the first user boot:
+  o	Copy the first-boot script, make it executable and run at first boot. This script (yunohost-firstboot) will, at the first user boot:
   
     -	Expand the partition to fit the sd card
     
