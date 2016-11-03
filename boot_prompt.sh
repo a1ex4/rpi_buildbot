@@ -9,6 +9,9 @@
 # Short-Description: Add IP and MAC in /etc/issue
 ### END INIT INFO
 
+
+chvt 2
+
 if [[ -f /proc/uptime ]];
 then
 	uptime=$(</proc/uptime)
@@ -87,14 +90,19 @@ usedmem="$(((($memtotal - $memfree) - $membuffer - $memcached) / $human))"
 totalmem="$(($memtotal / $human))"
 mem="${usedmem}MB / ${totalmem}MB"
 
-ip=`/sbin/ifconfig | sed '/Bcast/!d' | awk '{print $2}' | sed 's/.*\://'`
+#ip=`/sbin/ifconfig | sed '/Bcast/!d' | awk '{print $2}' | sed 's/.*\://'`
+
+#ip=$(ip addr | grep 'state UP' -A2 | tail -n1 | awk '{print $2}' | cut -f1  -d'/')
+
+
+ip=$(/sbin/ifconfig | sed '/Bcast/!d' | awk '{print $2}' | sed 's/.*\://')
 
 echo -e "\n mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm Yunohost v2" > /etc/issue
 echo -E " mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm Kernel: $(uname -m) $(uname -r)" >> /etc/issue
 echo -E " mmmQ                       Ymmmm Uptime: ${uptime}" >> /etc/issue
 echo -E " mmm#   .2A929     .12iQ7   :mmmm CPU: ${cpu}" >> /etc/issue
 echo -E " mmmp    ;mmmm#   :mmmmp.   ,mmmm RAM: ${mem}" >> /etc/issue
-echo -E " mmm#     ,mmmQ5 .Ymmmp     :mmmm IP: ${ip}" >> /etc/issue
+echo -E " mmm#     ,mmmQ5 .Ymmmp     :mmmm IP: $ip" >> /etc/issue
 echo -E " mmmp      ,mmmp ,mmmp      ,mmmm Domain: $(cat /etc/yunohost/current_host)" >> /etc/issue
 echo -E " mmm#       ;mmmmNmmp       :mmmm " >> /etc/issue
 echo -E " mmmp       .YmmmmmA;       ,mmmm " >> /etc/issue
@@ -105,42 +113,43 @@ echo -E " mmmp         7mmm#,        ,mmmm " >> /etc/issue
 echo -E " mmm#                       :mmmm " >> /etc/issue
 echo -E " mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm " >> /etc/issue
 echo -E " mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm " >> /etc/issue
-echo -e "\n      \e[0;30;47m Server IP: ${ip} \e[0m\n" >> /etc/issue
+echo -e "\n      \e[0;30;47m Server IP: $1 $2 \e[0m\n" >> /etc/issue
 
 if [[ ! -f /etc/yunohost/installed ]]
 then
-        if [[ ! -f /etc/yunohost/from_script ]]
-        then
-		echo -e "\n mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm Yunohost v2"
-		echo -E " mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm " 
-		echo -E " mmmQ                       Ymmmm IP: ${ip}" 
-		echo -E " mmm#   .2A929     .12iQ7   :mmmm " 
-		echo -E " mmmp    ;mmmm#   :mmmmp.   ,mmmm " 
-		echo -E " mmm#     ,mmmQ5 .Ymmmp     :mmmm " 
-		echo -E " mmmp      ,mmmp ,mmmp      ,mmmm " 
-		echo -E " mmm#       ;mmmmNmmp       :mmmm " 
-		echo -E " mmmp       .YmmmmmA;       ,mmmm " 
-		echo -E " mmm#        .KmmmQY        :mmmm " 
-		echo -E " mmmp         :mmm#         ,mmmm " 
-		echo -E " mmm#        .7mmmp,        :mmmm " 
-		echo -E " mmmp         7mmm#,        ,mmmm " 
-		echo -E " mmm#                       :mmmm " 
-		echo -E " mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm " 
-		echo -E " mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm " 
-		echo -e "\n          \e[0;30;47m Post-installation \e[0m\n"
-                read -p "Proceed to post-installation? (y/n) " -n 1
-		RESULT=1
-		while [ $RESULT -gt 0 ]; do
-			if [[ $REPLY =~ ^[Nn]$ ]]; then
-				exit 0
-			fi
-                        echo -e "\n"
-			/usr/bin/yunohost tools postinstall
-			let RESULT=$?
-			if [ $RESULT -gt 0 ]; then
-				echo -e "\n"
-				read -p "Retry? (y/n) " -n 1
-			fi
-		done
-        fi
+
+	echo -e "\n mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm Yunohost v2"
+	echo -E " mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm " 
+	echo -E " mmmQ                       Ymmmm IP: ${ip}" 
+	echo -E " mmm#   .2A929     .12iQ7   :mmmm " 
+	echo -E " mmmp    ;mmmm#   :mmmmp.   ,mmmm " 
+	echo -E " mmm#     ,mmmQ5 .Ymmmp     :mmmm " 
+	echo -E " mmmp      ,mmmp ,mmmp      ,mmmm " 
+	echo -E " mmm#       ;mmmmNmmp       :mmmm " 
+	echo -E " mmmp       .YmmmmmA;       ,mmmm " 
+	echo -E " mmm#        .KmmmQY        :mmmm " 
+	echo -E " mmmp         :mmm#         ,mmmm " 
+	echo -E " mmm#        .7mmmp,        :mmmm " 
+	echo -E " mmmp         7mmm#,        ,mmmm " 
+	echo -E " mmm#                       :mmmm " 
+	echo -E " mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm " 
+	echo -E " mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm " 
+	echo -e "\n          \e[0;30;47m Post-installation \e[0m\n"
+	read -p "Proceed to post-installation? (y/n) " -n 1
+	RESULT=1
+	while [ $RESULT -gt 0 ]; do
+		if [[ $REPLY =~ ^[Nn]$ ]]; then
+			exit 0
+		fi
+		echo -e "\n"
+		/usr/bin/yunohost tools postinstall
+		let RESULT=$?
+		if [ $RESULT -gt 0 ]; then
+			echo -e "\n"
+			read -p "Retry? (y/n) " -n 1
+		fi
+	done
+	sed -i '0,/without-password/s/without-password/yes/g' /etc/ssh/sshd_config
 fi
+
+chvt 3
