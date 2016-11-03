@@ -15,28 +15,34 @@ if ! [ -e /var/rpi_update ]; then
     reboot
 fi
 
-apt-get install git -y
-git clone https://github.com/YunoHost/install_script /tmp/install_script
-
 # If we are on the Raspberry Pi Zero http://elinux.org/RPi_HardwareHistory
 if [[ $( cat /proc/cpuinfo | grep 'Revision' | awk '{print $3}' | sed 's/^1000//') == *"9000"* ]]; then
     apt-get install -y ssl-cert lua-event lua-expat lua-socket lua-sec lua-filesystem
-    cd /tmp/install_script && wget https://github.com/likeitneverwentaway/rpi_buildbot/raw/master/metronome_3.7.9%2B33b7572-1_armhf.deb
+    cd /tmp/install_script
     dpkg -i metronome_3.7.9+33b7572-1_armhf.deb
     apt-mark hold metronome
 fi
 
-
+# Yunohost install
 cd /tmp/install_script && sudo ./install_yunohost -a
 
+# Allow ssh as root
 sed -i '0,/without-password/s/without-password/yes/g' /etc/ssh/sshd_config
+
+# Delete pi user
 deluser --remove-all-files pi
+
+# Change hostname
 sed -i 's/raspberrypi/YunoHost/g' /etc/hosts
 sed -i 's/raspberrypi/YunoHost/g' /etc/hostname
-wget https://raw.githubusercontent.com/likeitneverwentaway/rpi_buildbot/master/yunohost-firstboot https://raw.githubusercontent.com/YunoHost/packages_old/0a4a0bb49d3754a14aff579d8f8ca8a21507b280/yunohost-config-others/config/others/boot_prompt.sh -P /etc/init.d/
-chmod a+x /etc/init.d/yunohost-firstboot /etc/init.d/boot_prompt.sh
+
+# Setup scripts
+chmod a+x yunohost-firstboot boot_prompt.sh
+cp yunohost-firstboot /etc/init.d/
+cp boot_prompt.sh /usr/bin/
 insserv /etc/init.d/yunohost-firstboot
-update-rc.d boot_prompt.sh defaults
+cp boot_prompt.service /etc/systemd/system/
+systemctl enable boot_prompt.service
 
 rm /var/rpi_update
 # Delete me
