@@ -141,6 +141,7 @@ then
 		echo -E " mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm " 
 		echo -E " mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm " 
 		echo -e "\n          \e[0;30;47m Post-installation \e[0m\n"
+		echo -E "You can go to $ip to execute the post-installation or do it right here."
 		read -p "Proceed to post-installation? (y/n) " -n 1
 		RESULT=1
 		while [ $RESULT -gt 0 ]; do
