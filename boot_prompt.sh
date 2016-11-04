@@ -97,7 +97,7 @@ mem="${usedmem}MB / ${totalmem}MB"
 
 ip=$(/sbin/ifconfig | sed '/Bcast/!d' | awk '{print $2}' | sed 's/.*\://')
 
-echo -e "\n mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm Yunohost v2" > /etc/issue
+echo -e "\n mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm Yunohost v2.4" > /etc/issue
 echo -E " mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm Kernel: $(uname -m) $(uname -r)" >> /etc/issue
 echo -E " mmmQ                       Ymmmm Uptime: ${uptime}" >> /etc/issue
 echo -E " mmm#   .2A929     .12iQ7   :mmmm CPU: ${cpu}" >> /etc/issue
@@ -123,9 +123,8 @@ then
 	if [[ -f /etc/yunohost/firstboot ]]
 	then
 		echo -E "$(tput setaf 2)Welcome to YunoHost !$(tput sgr0) Please wait for your Raspberry Pi to reboot, we are putting the final touch to the SD card."
-		echo -E "Your new self hosted server is a command away from being ready !"
 	else
-		echo -e "\n mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm Yunohost v2"
+		echo -e "\n mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm Yunohost v2.4"
 		echo -E " mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm " 
 		echo -E " mmmQ                       Ymmmm IP: ${ip}" 
 		echo -E " mmm#   .2A929     .12iQ7   :mmmm " 
@@ -157,7 +156,7 @@ then
 			fi
 		done
 		sed -i '0,/without-password/s/without-password/yes/g' /etc/ssh/sshd_config
-		echo -E "YoloSwag"
+		sleep 5
 		chvt 3
 	fi
 fi
