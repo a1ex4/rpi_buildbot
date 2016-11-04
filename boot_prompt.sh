@@ -115,11 +115,14 @@ echo -E " mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm " >> /etc/issue
 echo -E " mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm " >> /etc/issue
 echo -e "\n      \e[0;30;47m Server IP: $1 $2 \e[0m\n" >> /etc/issue
 
+chvt 3
+
 if [[ ! -f /etc/yunohost/installed ]]
+chvt 2
 then
 	if [[ -f /etc/yunohost/firstboot ]]
 	then
-		echo -E "$(tput setaf 1)Welcome to YunoHost !$(tput sgr0) Please wait for your Raspberry Pi to reboot, we are putting the final touch to the SD card."
+		echo -E "$(tput setaf 2)Welcome to YunoHost !$(tput sgr0) Please wait for your Raspberry Pi to reboot, we are putting the final touch to the SD card."
 		echo -E "Your new self hosted server is a command away from being ready !"
 	else
 		echo -e "\n mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm Yunohost v2"
@@ -156,5 +159,3 @@ then
 		sed -i '0,/without-password/s/without-password/yes/g' /etc/ssh/sshd_config
 	fi
 fi
-
-chvt 3
