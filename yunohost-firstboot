@@ -23,5 +23,6 @@ apt-get --purge clean
 echo "Removing myself ..."
 insserv -r /etc/init.d/yunohost-firstboot
 rm -f /etc/init.d/yunohost-firstboot
+rm /etc/yunohost/firstboot
 echo "Rebooting ..."
 reboot
