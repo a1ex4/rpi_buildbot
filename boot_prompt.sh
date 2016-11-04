@@ -119,8 +119,8 @@ if [[ ! -f /etc/yunohost/installed ]]
 then
 	if [[ -f /etc/yunohost/firstboot ]]
 	then
-		echo "Welcome to YunoHost ! Please wait for your Raspberry Pi to reboot, we are putting the final touch to the SD card."
-		echo "Your new self hosted server is a command away from being ready !"
+		echo -E "Welcome to YunoHost ! Please wait for your Raspberry Pi to reboot, we are putting the final touch to the SD card."
+		echo -E "Your new self hosted server is a command away from being ready !"
 	else
 		echo -e "\n mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm Yunohost v2"
 		echo -E " mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm " 
