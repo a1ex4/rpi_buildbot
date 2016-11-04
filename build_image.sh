@@ -43,7 +43,7 @@ chmod a+x yunohost-firstboot boot_prompt.sh
 cp yunohost-firstboot /etc/init.d/
 cp boot_prompt.sh /usr/bin/
 insserv /etc/init.d/yunohost-firstboot
-touch /var/firstboot
+touch /etc/yunohost/firstboot
 cp boot_prompt.service /etc/systemd/system/
 systemctl enable boot_prompt.service
 
