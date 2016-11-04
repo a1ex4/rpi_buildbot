@@ -117,39 +117,43 @@ echo -e "\n      \e[0;30;47m Server IP: $1 $2 \e[0m\n" >> /etc/issue
 
 if [[ ! -f /etc/yunohost/installed ]]
 then
-
-	echo -e "\n mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm Yunohost v2"
-	echo -E " mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm " 
-	echo -E " mmmQ                       Ymmmm IP: ${ip}" 
-	echo -E " mmm#   .2A929     .12iQ7   :mmmm " 
-	echo -E " mmmp    ;mmmm#   :mmmmp.   ,mmmm " 
-	echo -E " mmm#     ,mmmQ5 .Ymmmp     :mmmm " 
-	echo -E " mmmp      ,mmmp ,mmmp      ,mmmm " 
-	echo -E " mmm#       ;mmmmNmmp       :mmmm " 
-	echo -E " mmmp       .YmmmmmA;       ,mmmm " 
-	echo -E " mmm#        .KmmmQY        :mmmm " 
-	echo -E " mmmp         :mmm#         ,mmmm " 
-	echo -E " mmm#        .7mmmp,        :mmmm " 
-	echo -E " mmmp         7mmm#,        ,mmmm " 
-	echo -E " mmm#                       :mmmm " 
-	echo -E " mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm " 
-	echo -E " mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm " 
-	echo -e "\n          \e[0;30;47m Post-installation \e[0m\n"
-	read -p "Proceed to post-installation? (y/n) " -n 1
-	RESULT=1
-	while [ $RESULT -gt 0 ]; do
-		if [[ $REPLY =~ ^[Nn]$ ]]; then
-			exit 0
-		fi
-		echo -e "\n"
-		/usr/bin/yunohost tools postinstall
-		let RESULT=$?
-		if [ $RESULT -gt 0 ]; then
+	if [[ -f /etc/yunohost/firstboot ]]
+	then
+		echo "Welcome to YunoHost ! Please wait for your Raspberry Pi to reboot, we are putting the final touch to the SD card."
+		echo "Your new self hosted server is a command away from being ready !"
+	else
+		echo -e "\n mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm Yunohost v2"
+		echo -E " mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm " 
+		echo -E " mmmQ                       Ymmmm IP: ${ip}" 
+		echo -E " mmm#   .2A929     .12iQ7   :mmmm " 
+		echo -E " mmmp    ;mmmm#   :mmmmp.   ,mmmm " 
+		echo -E " mmm#     ,mmmQ5 .Ymmmp     :mmmm " 
+		echo -E " mmmp      ,mmmp ,mmmp      ,mmmm " 
+		echo -E " mmm#       ;mmmmNmmp       :mmmm " 
+		echo -E " mmmp       .YmmmmmA;       ,mmmm " 
+		echo -E " mmm#        .KmmmQY        :mmmm " 
+		echo -E " mmmp         :mmm#         ,mmmm " 
+		echo -E " mmm#        .7mmmp,        :mmmm " 
+		echo -E " mmmp         7mmm#,        ,mmmm " 
+		echo -E " mmm#                       :mmmm " 
+		echo -E " mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm " 
+		echo -E " mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm " 
+		echo -e "\n          \e[0;30;47m Post-installation \e[0m\n"
+		read -p "Proceed to post-installation? (y/n) " -n 1
+		RESULT=1
+		while [ $RESULT -gt 0 ]; do
+			if [[ $REPLY =~ ^[Nn]$ ]]; then
+				exit 0
+			fi
 			echo -e "\n"
-			read -p "Retry? (y/n) " -n 1
-		fi
-	done
-	sed -i '0,/without-password/s/without-password/yes/g' /etc/ssh/sshd_config
+			/usr/bin/yunohost tools postinstall
+			let RESULT=$?
+			if [ $RESULT -gt 0 ]; then
+				echo -e "\n"
+				read -p "Retry? (y/n) " -n 1
+			fi
+		done
+		sed -i '0,/without-password/s/without-password/yes/g' /etc/ssh/sshd_config
 fi
 
 chvt 3
