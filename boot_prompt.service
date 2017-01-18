@@ -1,14 +1,9 @@
 [Unit]
 Description=YunoHost boot message
-After=getty@tty2.service
+After=network-online.target
 
 [Service]
-Type=oneshot
-ExecStart=/usr/bin/boot_prompt.sh
-StandardInput=tty
-TTYPath=/dev/tty2
-TTYReset=yes
-TTYVHangup=yes
+ExecStart=/usr/bin/screenfetch
 
 [Install]
-WantedBy=default.target
+WantedBy=network-online.target
