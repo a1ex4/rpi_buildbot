@@ -2580,7 +2580,7 @@ infoDisplay
 [ "$exportTheme" == "1" ] && themeExport
 
 if ! [ -e /etc/yunohost/installed ]; then
-	echo -e "You can go to $labelcolor http://$localip $textcolor to execute the post-installation or do it right here."
+	echo -e "You can go to $labelcolor http://$localip/ $textcolor to execute the post-installation or do it right here."
 	read -p "Proceed to post-installation? (y/n) " -n 1
 	RESULT=1
 	while [ $RESULT -gt 0 ]; do
