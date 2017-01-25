@@ -32,7 +32,6 @@
 #LANGUAGE=C
 #LC_ALL=C
 
-chvt 2
 
 scriptVersion="3.7.0"
 
@@ -268,7 +267,7 @@ detectlocalip() {
 detectmaindomain() {
 	if [ -e /etc/yunohost/installed ]; then
 		maindomain=$(cat /etc/yunohost/current_host)
-	fi}
+	fi}}
 
 
 # Distro Detection - Begin
@@ -2597,7 +2596,6 @@ if ! [ -e /etc/yunohost/installed ]; then
 		fi
 	done
 fi
-
 chvt 2
-
 exit 0
+
