@@ -2361,22 +2361,22 @@ asciiText () {
 	startline="0"
 	logowidth="32"
 	fulloutput=(
-"${c1}⠇   ⠡⠡⠡⠡⢁            ⠌⠌⠌⠌⠌  %s"
-"${c1}⠇    ⠡'''⢁          ⠌'''⠌   %s"
-"${c1}⠇     ⠡'''⢁        ⠌'''⠌    %s"
-"${c1}⠇      ⠡'''⢁      ⠌'''⠌     %s"
-"${c1}⠇       ⠡'''⢁    ⠌'''⠌      %s"
-"${c1}⠇        ⠡'''⠡  ⠌'''⠌       %s"
-"${c1}⠇         ⠡'''⠡⠌'''⠌        %s"
-"${c1}⠇          ⠂''''''⡐         %s"
-"${c1}⠇           :''''':         %s"
-"${c1}⠇           :''''':         %s"
-"${c1}⠇           :''''':         %s"
-"${c1}⠇           :''''':         %s"
-"${c1}⠇           :''''':         %s"
-"${c1}⠇           :''''':         %s"
-"${c1}⠇           :''''':         %s"
-"${c1}⠇            ......              %s")
+"   mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm  %s"
+"   mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm  %s"
+"   mmmQ                       Ymmmm  %s"
+"   mmm#   .2A929     .12iQ7   :mmmm  %s"
+"   mmmp    ;mmmm#   :mmmmp.   ,mmmm  %s"
+"   mmm#     ,mmmQ5 .Ymmmp     :mmmm  %s"
+"   mmmp      ,mmmp ,mmmp      ,mmmm  %s"
+"   mmm#       ;mmmmNmmp       :mmmm  %s"
+"   mmmp       .YmmmmmA;       ,mmmm  %s"
+"   mmm#        .KmmmQY        :mmmm  %s"
+"   mmmp         :mmm#         ,mmmm  %s"
+"   mmm#        .7mmmp,        :mmmm  %s"
+"   mmmp         7mmm#,        ,mmmm  %s"
+"   mmm#                       :mmmm %s"
+"   mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm %s"
+"   mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm %s")
 
 	# Truncate lines based on terminal width.
 	if [ "$truncateSet" == "Yes" ]; then
