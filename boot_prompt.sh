@@ -266,8 +266,12 @@ detectlocalip() {
 
 detectmaindomain() {
 	if [ -e /etc/yunohost/installed ]; then
-		maindomain=$(cat /etc/yunohost/current_host)
-	fi}
+		maindomain=$(cat /etc/yunohost/current_host);
+	
+	fi
+        
+}
+
 
 
 # Distro Detection - Begin
@@ -2598,4 +2602,3 @@ if ! [ -e /etc/yunohost/installed ]; then
 fi
 chvt 2
 exit 0
-
